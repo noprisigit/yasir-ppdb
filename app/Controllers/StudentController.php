@@ -366,21 +366,21 @@ class StudentController extends BaseController
     $photos = $this->request->getFiles();
 
     foreach ($photos['foto'] as $photo_k => $photo_v) {
-		if ($photo_v->isValid()) {
+      if ($photo_v->isValid()) {
 
-      $fileName = $photo_v->getRandomName();
+        $fileName = $photo_v->getRandomName();
 
-			$input[] = [
-				'student_id' => $this->request->getPost('student_id'),
-				'jenis_berkas' => $this->request->getPost('jenis_berkas[]')[$photo_k],
-				'deskripsi_berkas' => $this->request->getPost('deskripsi[]')[$photo_k],
-				'dokumen' => $fileName,
-				'status' => 'Sedang Diverifikasi',
-				'catatan' => $this->request->getPost('catatan[]')[$photo_k]
-			];
+        $input[] = [
+          'student_id' => $this->request->getPost('student_id'),
+          'jenis_berkas' => $this->request->getPost('jenis_berkas[]')[$photo_k],
+          'deskripsi_berkas' => $this->request->getPost('deskripsi[]')[$photo_k],
+          'dokumen' => $fileName,
+          'status' => 'Sedang Diverifikasi',
+          'catatan' => $this->request->getPost('catatan[]')[$photo_k]
+        ];
 
-			$photo_v->move(ROOTPATH . 'assets/images/dokumen', $fileName);
-		}
+        $photo_v->move(ROOTPATH . 'assets/images/dokumen', $fileName);
+      }
     }
 
     $this->berkasModel->insertBatch($input);
